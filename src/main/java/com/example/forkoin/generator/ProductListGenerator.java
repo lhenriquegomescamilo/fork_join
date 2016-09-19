@@ -7,10 +7,17 @@ import java.util.stream.Stream;
 import com.example.forkoin.model.Product;
 
 public class ProductListGenerator {
-	public List<Product> generate(int size) {
-		return Stream.generate(Product.bind(Product::new, "C", 1.2))
-				.limit(size).
-				collect(Collectors.toList());
-	}
+    private ProductListGenerator() {
 
+    }
+
+    public List<Product> generate(int size) {
+        return Stream.generate(Product.bind(Product::new, "C", Math.random()))
+                .limit(size).
+                        collect(Collectors.toList());
+    }
+
+    public static ProductListGenerator newInstance() {
+        return new ProductListGenerator();
+    }
 }
