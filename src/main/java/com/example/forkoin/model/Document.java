@@ -1,10 +1,8 @@
 package com.example.forkoin.model;
 
-import com.google.common.base.Strings;
+import com.example.forkoin.tasks.DocumentTask;
 
-import java.util.Arrays;
 import java.util.Random;
-import java.util.function.Function;
 import java.util.stream.Stream;
 
 /**
@@ -25,11 +23,15 @@ public class Document {
                             int index = random.nextInt(words.length);
                             String workFound = words[index];
                             documents[row][col] = workFound ;
-                            return workFound .equals(word);
+                            return workFound.equals(word);
                         }).count()
                 ).count();
         System.out.println("DocumeentMock the word appears " + counter + "times int the document");
         return documents;
 
+    }
+
+    public static DocumentTask newInstance(String[][] document, int start, int middle, String word) {
+        return new DocumentTask(document, start, middle, word);
     }
 }
