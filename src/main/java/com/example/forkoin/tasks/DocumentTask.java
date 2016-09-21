@@ -1,10 +1,12 @@
 package com.example.forkoin.tasks;
 
 import com.example.forkoin.model.Document;
+import com.google.common.collect.Lists;
 
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.RecursiveTask;
+import java.util.stream.IntStream;
 
 /**
  * Created by luis.camilo on 20/09/2016.
@@ -42,10 +44,23 @@ public class DocumentTask extends RecursiveTask<Integer> {
 
     private Integer groupResult(Integer taskOne, Integer taskTwo) {
         return 0;
+
     }
 
-    private int processLine(String[][] document, int start, int end, String word) {
-        List<LineTask> tasks = null;
-        return 0;
+    private Integer processLine(String[][] document, int start, int end, String word) {
+        List<LineTask> tasks = Lists.newLinkedList();
+        for (int i = start; i < end; i++) {
+            LineTask task = LineTask.newInstance(document[i], 0, document[i].length, word);
+            tasks.add(task);
+        }
+        Integer result = tasks.stream().map(task -> {
+            try {
+                return task.get();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+        }).sum();
+        return result;
     }
 }
