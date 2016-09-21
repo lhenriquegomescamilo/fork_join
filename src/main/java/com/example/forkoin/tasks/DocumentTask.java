@@ -1,7 +1,6 @@
 package com.example.forkoin.tasks;
 
 import com.example.forkoin.model.Document;
-import com.google.common.collect.Lists;
 
 import java.util.List;
 import java.util.concurrent.ExecutionException;
