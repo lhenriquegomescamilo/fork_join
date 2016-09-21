@@ -6,6 +6,7 @@ import com.google.common.collect.Lists;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.RecursiveTask;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 /**
@@ -48,11 +49,9 @@ public class DocumentTask extends RecursiveTask<Integer> {
     }
 
     private Integer processLine(String[][] document, int start, int end, String word) {
-        List<LineTask> tasks = Lists.newLinkedList();
-        for (int i = start; i < end; i++) {
-            LineTask task = LineTask.newInstance(document[i], 0, document[i].length, word);
-            tasks.add(task);
-        }
+        List<LineTask> tasks = IntStream.range(start, end)
+                .mapToObj(index -> LineTask.newInstance(document[index], 0, document[index].length, word))
+                .collect(Collectors.toList());
         Integer result = tasks.stream().mapToInt(task -> {
             Integer resultFromTask = 0;
             try {
