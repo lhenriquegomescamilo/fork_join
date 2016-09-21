@@ -53,12 +53,14 @@ public class DocumentTask extends RecursiveTask<Integer> {
             LineTask task = LineTask.newInstance(document[i], 0, document[i].length, word);
             tasks.add(task);
         }
-        Integer result = tasks.stream().map(task -> {
+        Integer result = tasks.stream().mapToInt(task -> {
+            Integer resultFromTask = 0;
             try {
-                return task.get();
+                resultFromTask = task.get();
             } catch (Exception e) {
-                e.printStackTrace();
+                resultFromTask = 0;
             }
+            return resultFromTask;
 
         }).sum();
         return result;
