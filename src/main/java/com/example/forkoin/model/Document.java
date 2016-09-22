@@ -9,6 +9,7 @@ import java.util.stream.Stream;
  * Created by luis.camilo on 19/09/2016.
  */
 public class Document {
+    private static Document document;
     private String[] words = {"the", "hello", "goodbye", "packt", "java", "thread", "pool", "random", "class", "main"};
 
     public String[][] generateDocument(Integer numLines, int numWords, String word) {
@@ -31,7 +32,14 @@ public class Document {
 
     }
 
-    public static DocumentTask newInstance(String[][] document, int start, int middle, String word) {
+    public static DocumentTask newInstanceDocumentTask(String[][] document, int start, int middle, String word) {
         return new DocumentTask(document, start, middle, word);
+    }
+
+    public static Document newInstance() {
+        if(document == null){
+            document = new Document();
+        }
+        return document;
     }
 }

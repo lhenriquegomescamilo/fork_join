@@ -30,8 +30,8 @@ public class DocumentTask extends RecursiveTask<Integer> {
             result = processLine(document, start, end, word);
         } else {
             int middle = (start + end) / 2;
-            DocumentTask taskOne = Document.newInstance(document, start, middle, word);
-            DocumentTask taskTwo = Document.newInstance(document, middle, end, word);
+            DocumentTask taskOne = Document.newInstanceDocumentTask(document, start, middle, word);
+            DocumentTask taskTwo = Document.newInstanceDocumentTask(document, middle, end, word);
             invokeAll(taskOne, taskTwo);
             try {
                 result = groupResult(taskOne.get(), taskTwo.get());
@@ -43,7 +43,8 @@ public class DocumentTask extends RecursiveTask<Integer> {
     }
 
     private Integer groupResult(Integer taskOne, Integer taskTwo) {
-        return 0;
+
+        return taskOne + taskTwo;
 
     }
 
@@ -62,5 +63,9 @@ public class DocumentTask extends RecursiveTask<Integer> {
 
         }).sum();
         return result;
+    }
+
+    public static DocumentTask newInstance(String[][] document, int start, int end, String word) {
+        return new DocumentTask(document, start, end, word);
     }
 }
